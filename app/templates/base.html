@@ -1,0 +1,38 @@
+<!--base.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoiceOps AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="/" class="logo-link" title="Click to view Dashboard">
+                <div class="voiceops-logo">
+                    <span class="logo-icon">🎙️</span>
+                    <span class="logo-text">Voice<span class="highlight">Ops</span></span>
+                </div>
+            </a>
+        </div>
+        <div class="navbar-right">
+
+            {% if user %}
+            <span class="user-greeting">
+            Hello {{ user }}
+            </span>
+            
+            <a href="/logout" class="logout-btn">
+            <span>Logout</span>
+            </a>
+            {% endif %}
+            
+            </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+</body>
+</html>

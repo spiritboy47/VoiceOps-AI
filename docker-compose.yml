@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+
+  voiceops-app:
+    build: .
+    container_name: voiceops-ai
+    expose:
+      - "8000"
+
+    restart: unless-stopped
+
+    volumes:
+      - .:/app
+
+    environment:
+      - PYTHONUNBUFFERED=1
+
+    networks:
+      - voiceops-net
+
+
+networks:
+  voiceops-net:
+    driver: bridge
