@@ -1,25 +1,19 @@
-version: "3.9"
-
 services:
-
   voiceops-app:
     build: .
     container_name: voiceops-ai
     expose:
       - "8000"
-
     restart: unless-stopped
-
     volumes:
       - .:/app
-
     environment:
       - PYTHONUNBUFFERED=1
-
     networks:
-      - voiceops-net
-
+      nginx_monitoring_network:
+        aliases:
+          - voiceops-app  # must match Nginx proxy_pass
 
 networks:
-  voiceops-net:
-    driver: bridge
+  nginx_monitoring_network:
+    external: true

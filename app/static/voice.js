@@ -1,6 +1,7 @@
 // =========JavaScript================
 let voiceQueue = [];
 let speaking = false;
+let selectedEnv = null;
 
 
 // ============================================
@@ -164,15 +165,22 @@ function speakNext(){
 
 // Send message to backend
 async function sendMessage(message) {
+
     if (!message.trim()) return;
 
-    // Update ENV from message input (dev, qa, uat, prod)
+    // Detect environment
     const envMatch = message.match(/\b(dev|qa|uat|prod)\b/i);
-    envValue.textContent = envMatch ? envMatch[0].toUpperCase() : "None";
+
+    if (envMatch) {
+        selectedEnv = envMatch[0].toUpperCase();
+    }
+
+    envValue.textContent = selectedEnv ? selectedEnv : "None";
 
     addChatBubble("ME", message);
 
     try {
+
         const res = await fetch("/api/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -182,15 +190,40 @@ async function sendMessage(message) {
         if (!res.ok) throw new Error("Server error");
 
         const data = await res.json();
+
         addChatBubble("BOT", data.response);
+
         speakText(data.response);
 
-        if (data.cpu !== null) cpuValue.textContent = `${data.cpu}%`;
-        if (data.memory !== null) memoryValue.textContent = `${data.memory}%`;
-        if (data.disk !== null) diskValue.textContent = `${data.disk}%`;
+        // ===============================
+        // FIXED METRICS HANDLING
+        // ===============================
+
+        cpuValue.textContent =
+            data.cpu !== null && data.cpu !== undefined
+                ? `${data.cpu}%`
+                : "--";
+
+        memoryValue.textContent =
+            data.memory !== null && data.memory !== undefined
+                ? `${data.memory}%`
+                : "--";
+
+        diskValue.textContent =
+            data.disk !== null && data.disk !== undefined
+                ? `${data.disk}%`
+                : "--";
+
     } catch (e) {
+
         addChatBubble("BOT", `Error: ${e.message}`);
+
+        cpuValue.textContent = "--";
+        memoryValue.textContent = "--";
+        diskValue.textContent = "--";
+
     }
+
 }
 
 // ============================================

@@ -16,7 +16,9 @@ SERVER_PROMETHEUS_MAPPING = {
     "DEV-SERVER": os.getenv("DEV_PROM_URL"),
     "QA-SERVER": os.getenv("QA_PROM_URL"),
     "UAT-SERVER": os.getenv("UAT_PROM_URL"),
-    "PROD-SERVER": os.getenv("PROD_PROM_URL")
+    "PROD-SERVER": os.getenv("PROD_PROM_URL"),
+    "MYSAA-SERVER": os.getenv("MYSAA_PROM_URL"),
+    "KK-SERVER": os.getenv("KK_PROM_URL")
 }
 
 # -------------------------------
@@ -26,7 +28,9 @@ SERVER_OS = {
     "DEV-SERVER": "windows",
     "QA-SERVER": "windows",
     "UAT-SERVER": "linux",
-    "PROD-SERVER": "linux"
+    "PROD-SERVER": "linux",
+    "MYSAA-SERVER": "linux",
+    "KK-SERVER": "linux"
 }
 
 # -------------------------------
